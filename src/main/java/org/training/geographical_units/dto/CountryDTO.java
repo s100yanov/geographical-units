@@ -1,4 +1,14 @@
 package org.training.geographical_units.dto;
 
-public record CountryDTO() {
+import java.util.Date;
+
+public record CountryDTO(
+        Integer id,
+        String name,
+        String capital,
+        Date established,
+        Long population,
+        Double area,
+        Integer continentId
+) {
 }

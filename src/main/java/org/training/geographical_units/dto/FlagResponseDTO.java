@@ -1,8 +1,9 @@
 package org.training.geographical_units.dto;
 
-public record ContinentDTO(
+public record FlagResponseDTO(
         Integer id,
         String name,
-        Double percentageOfEarthArea
+        Long size,
+        String pathToStorage
 ) {
 }

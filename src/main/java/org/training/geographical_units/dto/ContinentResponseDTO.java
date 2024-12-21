@@ -1,4 +1,10 @@
 package org.training.geographical_units.dto;
 
-public record ContinentResponseDTO() {
+import java.util.List;
+
+public record ContinentResponseDTO(
+        Integer id,
+        String name,
+        List<String> countries
+) {
 }
