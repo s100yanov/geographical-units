@@ -40,19 +40,12 @@ public class ContinentController {
 
     @PutMapping("/unit/{id}")
     public ResponseEntity<?> updateContinent(@RequestBody ContinentDTO dto, @PathVariable int id) {
-        ContinentResponseDTO updatedContinent = continentService.updateContinent(dto, id);
-        if (updatedContinent == null) {
-            return ResponseEntity.badRequest().body("Entity with id=\"" + id + "\" not available!");
-        }
-        return new ResponseEntity<>(updatedContinent, HttpStatus.OK);
+        return new ResponseEntity<>(continentService.updateContinent(dto, id), HttpStatus.OK);
     }
 
     @DeleteMapping("/unit/{id}")
     public ResponseEntity<String> deleteContinent(@PathVariable int id) {
-        ContinentResponseDTO deletedContinent = continentService.deleteContinent(id);
-        if (deletedContinent == null) {
-            return ResponseEntity.badRequest().body("Entity with id=\"" + id + "\" not available!");
-        }
+        continentService.deleteContinent(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
