@@ -24,4 +24,8 @@ public class Continent {
     @JsonManagedReference
     private List<Country> countries;
 
+    @Override
+    public String toString() {
+        return this.getName();
+    }
 }

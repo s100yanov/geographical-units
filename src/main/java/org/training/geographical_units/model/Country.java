@@ -34,4 +34,8 @@ public class Country {
     @JsonManagedReference
     private Flag flag;
 
+    @Override
+    public String toString() {
+        return this.getName();
+    }
 }
