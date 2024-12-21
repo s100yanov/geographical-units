@@ -50,11 +50,11 @@ public class FlagController {
     }
 
     @DeleteMapping("/unit")
-    public ResponseEntity<FlagResponseDTO> deleteFlagByName(@RequestParam("flagName") String flagName) {
+    public ResponseEntity<String> deleteFlagByName(@RequestParam("flagName") String flagName) {
         FlagResponseDTO deleted = flagService.deleteFlagByName(flagName);
         if (deleted == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.badRequest().body("Entity with flagName=\"" + flagName + "\" not available!");
         }
-        return new ResponseEntity<>(deleted, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

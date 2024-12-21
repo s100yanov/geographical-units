@@ -43,20 +43,20 @@ public class CountryController {
     }
 
     @PutMapping("/unit/{id}")
-    public ResponseEntity<CountryResponseDTO> updateCountry(@RequestBody CountryDTO dto,@PathVariable int id) {
+    public ResponseEntity<?> updateCountry(@RequestBody CountryDTO dto,@PathVariable int id) {
         CountryResponseDTO updatedCountry = countryService.updateCountry(dto, id);
         if (updatedCountry == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return ResponseEntity.badRequest().body("Entity with id=\"" + id + "\" not available!");
         }
         return new ResponseEntity<>(updatedCountry, HttpStatus.OK);
     }
 
     @DeleteMapping("/unit/{id}")
-    public ResponseEntity<CountryResponseDTO> deleteCountry(@PathVariable int id) {
+    public ResponseEntity<String> deleteCountry(@PathVariable int id) {
         CountryResponseDTO deleted = countryService.deleteCountry(id);
         if (deleted == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.badRequest().body("Entity with id=\"" + id + "\" not available!");
         }
-        return new ResponseEntity<>(deleted, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

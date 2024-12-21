@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.training.geographical_units.dto.ContinentDTO;
 import org.training.geographical_units.dto.ContinentResponseDTO;
-import org.training.geographical_units.dto.CountryResponseDTO;
 import org.training.geographical_units.service.ContinentService;
 
 import java.util.List;
@@ -40,20 +39,20 @@ public class ContinentController {
     }
 
     @PutMapping("/unit/{id}")
-    public ResponseEntity<ContinentResponseDTO> updateContinent(@RequestBody ContinentDTO dto, @PathVariable int id) {
+    public ResponseEntity<?> updateContinent(@RequestBody ContinentDTO dto, @PathVariable int id) {
         ContinentResponseDTO updatedContinent = continentService.updateContinent(dto, id);
         if (updatedContinent == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.badRequest().body("Entity with id=\"" + id + "\" not available!");
         }
         return new ResponseEntity<>(updatedContinent, HttpStatus.OK);
     }
 
     @DeleteMapping("/unit/{id}")
-    public ResponseEntity<CountryResponseDTO> deleteContinent(@PathVariable int id) {
+    public ResponseEntity<String> deleteContinent(@PathVariable int id) {
         ContinentResponseDTO deletedContinent = continentService.deleteContinent(id);
         if (deletedContinent == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.badRequest().body("Entity with id=\"" + id + "\" not available!");
         }
-        return new ResponseEntity<>(deletedContinent, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
