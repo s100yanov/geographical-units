@@ -16,12 +16,19 @@ public class Flag {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    private Integer size;
+    private Long size;
     private String path;
     @OneToOne
     @JoinColumn(name = "country")
     @JsonBackReference
     private Country country;
+
+    public Flag(String name, long size, String path, Country country) {
+        this.name = name;
+        this.size = size;
+        this.path = path;
+        this.country = country;
+    }
 
     @Override
     public String toString() {

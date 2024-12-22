@@ -28,7 +28,7 @@ public class FlagController {
             File requestedFlag = flagService.getFlagByName(flagName);
             return ResponseEntity.ok()
                     .header(HttpHeaders.CONTENT_DISPOSITION,
-                            "image; flagName=\"" + flagName + "\"")
+                            "attachment; flagName=\"" + flagName + "\"")
                     .contentLength(requestedFlag.length())
                     .contentType(MediaType.IMAGE_PNG)
                     .body(new InputStreamResource(Files.newInputStream(requestedFlag.toPath())));
@@ -51,10 +51,7 @@ public class FlagController {
 
     @DeleteMapping("/unit")
     public ResponseEntity<String> deleteFlagByName(@RequestParam("flagName") String flagName) {
-        FlagResponseDTO deleted = flagService.deleteFlagByName(flagName);
-        if (deleted == null) {
-            return ResponseEntity.badRequest().body("Entity with flagName=\"" + flagName + "\" not available!");
-        }
+        flagService.deleteFlagByName(flagName);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

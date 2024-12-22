@@ -6,4 +6,6 @@ import org.training.geographical_units.model.Flag;
 
 @Repository
 public interface FlagRepository extends JpaRepository<Flag, Integer> {
+
+    Flag findByName(String flagName);
 }
