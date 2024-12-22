@@ -7,7 +7,7 @@ public record CountryResponseDTO(
         Integer id,
         String name,
         String capital,
-        Continent continent,
-        Flag flag
+        String continent,
+        String flag
 ) {
 }

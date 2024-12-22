@@ -34,6 +34,10 @@ public class Country {
     @JsonManagedReference
     private Flag flag;
 
+    public Country(Integer id, String name, String capital, Date establishmentDate,
+                   Long population, Double areaInKm2, Continent continent) {
+    }
+
     @Override
     public String toString() {
         return this.getName();

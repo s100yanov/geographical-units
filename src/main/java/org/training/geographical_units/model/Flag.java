@@ -23,4 +23,8 @@ public class Flag {
     @JsonBackReference
     private Country country;
 
+    @Override
+    public String toString() {
+        return this.getName();
+    }
 }
