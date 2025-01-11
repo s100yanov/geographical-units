@@ -22,9 +22,7 @@ public class Country {
     private String name;
     private String capital;
     @Column(name = "establishment_date")
-    @Temporal(TemporalType.DATE)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-    private Date establishmentDate;
+    private String establishmentDate;
     private Long population;
     @Column(name = "area_in_km^2")
     private Double areaInKm2;
@@ -36,8 +34,15 @@ public class Country {
     @JsonManagedReference
     private Flag flag;
 
-    public Country(Integer id, String name, String capital, Date establishmentDate,
+    public Country(Integer id, String name, String capital, String establishmentDate,
                    Long population, Double areaInKm2, Continent continent) {
+        this.id = id;
+        this.name = name;
+        this.capital = capital;
+        this.establishmentDate = establishmentDate;
+        this.population = population;
+        this.areaInKm2 = areaInKm2;
+        this.continent = continent;
     }
 
     @Override
