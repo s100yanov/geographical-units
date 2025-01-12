@@ -1,5 +1,6 @@
 package org.training.geographical_units.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.training.geographical_units.dto.FlagResponseDTO;
@@ -8,7 +9,6 @@ import org.training.geographical_units.model.Flag;
 import org.training.geographical_units.repository.FlagRepository;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -60,7 +60,10 @@ public class FlagService {
         )));
     }
 
-    public void deleteFlagByName(String flagName) {
-        Flag flag = flagRepository.findByName(flagName);
+    public void deleteFlagById(int id) {
+        Flag flag = flagRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Entity with id= " + id + " not available!"));
+        flag.getCountry().setFlag(null);
+        flagRepository.delete(flag);
     }
 }

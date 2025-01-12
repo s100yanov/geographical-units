@@ -49,9 +49,9 @@ public class FlagController {
         }
     }
 
-    @DeleteMapping("/unit")
-    public ResponseEntity<String> deleteFlagByName(@RequestParam("flagName") String flagName) {
-        flagService.deleteFlagByName(flagName);
+    @DeleteMapping("/unit/{id}")
+    public ResponseEntity<String> deleteFlagById(@PathVariable int id) {
+        flagService.deleteFlagById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
