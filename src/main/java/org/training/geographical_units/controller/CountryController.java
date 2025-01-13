@@ -26,11 +26,7 @@ public class CountryController {
 
     @GetMapping("/unit/{id}")
     public ResponseEntity<CountryResponseDTO> getCountryById(@PathVariable int id) {
-        CountryResponseDTO requestedCountry = countryService.getCountryById(id);
-        if (requestedCountry == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(requestedCountry, HttpStatus.FOUND);
+        return new ResponseEntity<>(countryService.getCountryById(id), HttpStatus.FOUND);
     }
 
     @PostMapping("/unit")
@@ -39,7 +35,7 @@ public class CountryController {
     }
 
     @PutMapping("/unit/{id}")
-    public ResponseEntity<?> updateCountry(@RequestBody CountryDTO dto,@PathVariable int id) {
+    public ResponseEntity<CountryResponseDTO> updateCountry(@RequestBody CountryDTO dto,@PathVariable int id) {
         return new ResponseEntity<>(countryService.updateCountry(dto, id), HttpStatus.OK);
     }
 

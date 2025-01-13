@@ -26,11 +26,7 @@ public class ContinentController {
 
     @GetMapping("/unit/{id}")
     public ResponseEntity<ContinentResponseDTO> getContinentById(@PathVariable int id) {
-        ContinentResponseDTO requestedContinent = continentService.getContinentById(id);
-        if (requestedContinent == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(requestedContinent, HttpStatus.FOUND);
+        return new ResponseEntity<>(continentService.getContinentById(id), HttpStatus.FOUND);
     }
 
     @PostMapping("/unit")
@@ -39,7 +35,7 @@ public class ContinentController {
     }
 
     @PutMapping("/unit/{id}")
-    public ResponseEntity<?> updateContinent(@RequestBody ContinentDTO dto, @PathVariable int id) {
+    public ResponseEntity<ContinentResponseDTO> updateContinent(@RequestBody ContinentDTO dto, @PathVariable int id) {
         return new ResponseEntity<>(continentService.updateContinent(dto, id), HttpStatus.OK);
     }
 
