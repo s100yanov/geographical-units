@@ -30,7 +30,9 @@ public class CountryService {
     public CountryResponseDTO getCountryById(int id) {
         return countryRepository.findById(id)
                 .map(CountryDTOMapper::toCountryResponseDto)
-                .orElse(null);
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Entity with id /" + id + "/ not available!"
+                ));
     }
 
     public CountryResponseDTO addCountry(CountryDTO dto) {
@@ -41,7 +43,7 @@ public class CountryService {
     public CountryResponseDTO updateCountry(CountryDTO dto, int id) {
         Country updated = countryRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(
-                        ("Entity with id= " + id + " not available!")
+                        "Entity with id /" + id + "/ not available!"
                 ));
         Continent continent = new Continent();
         continent.setId(dto.continentId());
@@ -57,7 +59,7 @@ public class CountryService {
     public void deleteCountry(int id) {
         Country deleted = countryRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(
-                        ("Entity with id= " + id + " not available!")
+                        "Entity with id /" + id + "/ not available!"
                 ));
         countryRepository.delete(deleted);
     }

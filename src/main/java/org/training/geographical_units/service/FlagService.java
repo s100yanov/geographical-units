@@ -62,7 +62,9 @@ public class FlagService {
 
     public void deleteFlagById(int id) {
         Flag flag = flagRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException("Entity with id= " + id + " not available!"));
+                () -> new EntityNotFoundException(
+                        "Entity with id /" + id + "/ not available!"
+                ));
         flag.getCountry().setFlag(null);
         flagRepository.delete(flag);
     }
