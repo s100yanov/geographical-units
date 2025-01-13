@@ -16,7 +16,9 @@ public class CountryDTOMapper {
                 country.getId(),
                 country.getName(),
                 country.getCapital(),
-                continent != null ? continent.toString() : missingEntity,
+                continent != null
+                        ? (continent.getName() != null ? continent.toString() : continent.getId().toString())
+                        : missingEntity,
                 flag != null ? flag.toString() : missingEntity
         );
     }
