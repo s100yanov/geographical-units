@@ -6,4 +6,6 @@ import org.training.geographical_units.model.Country;
 
 @Repository
 public interface CountryRepository extends JpaRepository<Country, Integer> {
+
+    Country findByName(String name);
 }

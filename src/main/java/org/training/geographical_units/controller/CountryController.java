@@ -29,6 +29,11 @@ public class CountryController {
         return new ResponseEntity<>(countryService.getCountryById(id), HttpStatus.FOUND);
     }
 
+    @GetMapping("/unit/name")
+    public ResponseEntity<CountryResponseDTO> getCountryByName(@RequestParam String countryName) {
+        return new ResponseEntity<>(countryService.getCountryByName(countryName), HttpStatus.FOUND);
+    }
+
     @PostMapping("/unit")
     public ResponseEntity<CountryResponseDTO> addCountry(@RequestBody CountryDTO dto) {
         return new ResponseEntity<>(countryService.addCountry(dto), HttpStatus.CREATED);

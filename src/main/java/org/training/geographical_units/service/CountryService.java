@@ -35,6 +35,14 @@ public class CountryService {
                 ));
     }
 
+    public CountryResponseDTO getCountryByName(String name) {
+        Country requested = countryRepository.findByName(name);
+        if (requested == null) {
+            throw new EntityNotFoundException("Entity with name /" + name + "/ not available!");
+        }
+        return CountryDTOMapper.toCountryResponseDto(requested);
+    }
+
     public CountryResponseDTO addCountry(CountryDTO dto) {
         Country added = countryRepository.save(CountryDTOMapper.toCountry(dto));
         return CountryDTOMapper.toCountryResponseDto(added);
