@@ -1,5 +1,6 @@
 package org.training.geographical_units.controller;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.*;
@@ -34,24 +35,33 @@ public class FlagController {
                     .body(new InputStreamResource(Files.newInputStream(requestedFlag.toPath())));
         }
         catch (IOException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.of(
+                    ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, e.getMessage()))
+                    .build();
         }
     }
 
     @PostMapping(value = "/unit", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> addFlag(@RequestPart MultipartFile flag, @RequestPart int countryId) {
+    public ResponseEntity<FlagResponseDTO> addFlag(@RequestPart MultipartFile flag, @RequestPart int countryId) {
         try {
             FlagResponseDTO addedFlag = flagService.addFlag(flag, countryId);
             return new ResponseEntity<>(addedFlag, HttpStatus.CREATED);
         }
         catch (IOException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return ResponseEntity.of(
+                    ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, e.getMessage()))
+                    .build();
         }
     }
 
     @DeleteMapping("/unit/{id}")
     public ResponseEntity<String> deleteFlagById(@PathVariable int id) {
-        flagService.deleteFlagById(id);
+        try {
+            flagService.deleteFlagById(id);
+        }
+        catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -1,6 +1,8 @@
 package org.training.geographical_units.controller;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.training.geographical_units.dto.CountryDTO;
@@ -26,12 +28,31 @@ public class CountryController {
 
     @GetMapping("/unit/{id}")
     public ResponseEntity<CountryResponseDTO> getCountryById(@PathVariable int id) {
-        return new ResponseEntity<>(countryService.getCountryById(id), HttpStatus.FOUND);
+        try {
+            CountryResponseDTO requestedCountry = countryService.getCountryById(id);
+            return new ResponseEntity<>(requestedCountry, HttpStatus.FOUND);
+        }
+        catch (EntityNotFoundException e) {
+            return ResponseEntity.of(
+                    ProblemDetail.forStatusAndDetail(
+                            HttpStatus.NOT_FOUND, e.getMessage()))
+                    .build();
+        }
     }
 
     @GetMapping("/unit/name")
     public ResponseEntity<CountryResponseDTO> getCountryByName(@RequestParam String countryName) {
-        return new ResponseEntity<>(countryService.getCountryByName(countryName), HttpStatus.FOUND);
+        try {
+            CountryResponseDTO requestedCountry = countryService.getCountryByName(countryName);
+            return new ResponseEntity<>(requestedCountry, HttpStatus.FOUND);
+        }
+        catch (EntityNotFoundException e) {
+            return ResponseEntity.of(
+                    ProblemDetail.forStatusAndDetail(
+                            HttpStatus.NOT_FOUND, e.getMessage()))
+                    .build();
+
+        }
     }
 
     @PostMapping("/unit")
@@ -41,12 +62,26 @@ public class CountryController {
 
     @PutMapping("/unit/{id}")
     public ResponseEntity<CountryResponseDTO> updateCountry(@RequestBody CountryDTO dto,@PathVariable int id) {
-        return new ResponseEntity<>(countryService.updateCountry(dto, id), HttpStatus.OK);
+        try {
+            CountryResponseDTO updatedCountry = countryService.updateCountry(dto, id);
+            return new ResponseEntity<>(updatedCountry, HttpStatus.OK);
+        }
+        catch (EntityNotFoundException e) {
+            return ResponseEntity.of(
+                    ProblemDetail.forStatusAndDetail(
+                            HttpStatus.BAD_REQUEST, e.getMessage()))
+                    .build();
+        }
     }
 
     @DeleteMapping("/unit/{id}")
     public ResponseEntity<String> deleteCountry(@PathVariable int id) {
-        countryService.deleteCountry(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        try {
+            countryService.deleteCountry(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 }
