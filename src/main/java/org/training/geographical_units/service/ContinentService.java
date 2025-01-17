@@ -44,7 +44,6 @@ public class ContinentService {
                 .orElseThrow(() -> new EntityNotFoundException(
                         "Entity with id /" + id + "/ not available!"
                 ));
-        updated.setId(dto.id());
         updated.setName(dto.name());
         updated.setPercentageOfWorldLandArea(dto.percentageOfEarthArea());
         return ContinentDTOMapper.toContinentResponseDto(continentRepository.save(updated));
