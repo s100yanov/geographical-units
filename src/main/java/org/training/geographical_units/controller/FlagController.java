@@ -32,11 +32,26 @@ public class FlagController {
                             "attachment; flagName=\"" + flagName + "\"")
                     .contentLength(requestedFlag.length())
                     .contentType(MediaType.IMAGE_PNG)
-                    .body(new InputStreamResource(Files.newInputStream(requestedFlag.toPath())));
+                    .body(new InputStreamResource(Files.newInputStream(requestedFlag.toPath()
+                    )));
         }
         catch (IOException e) {
             return ResponseEntity.of(
                     ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, e.getMessage()))
+                    .build();
+        }
+    }
+
+    @GetMapping("/unit/details")
+    public ResponseEntity<FlagResponseDTO> getFlagDetails(@RequestParam("flagName") String flagName) {
+        try {
+            FlagResponseDTO requestedFlag = flagService.getFlagDetails(flagName);
+            return new ResponseEntity<>(requestedFlag, HttpStatus.FOUND);
+        }
+        catch (EntityNotFoundException e) {
+            return ResponseEntity.of(
+                    ProblemDetail.forStatusAndDetail(
+                            HttpStatus.NOT_FOUND, e.getMessage()))
                     .build();
         }
     }
@@ -54,8 +69,8 @@ public class FlagController {
         }
     }
 
-    @DeleteMapping("/unit/{id}")
-    public ResponseEntity<String> deleteFlagById(@PathVariable int id) {
+    @DeleteMapping("/unit/remove-and-detach/{id}")
+    public ResponseEntity<String> removeDBDetailsAndDetachFromParent(@PathVariable int id) {
         try {
             flagService.deleteFlagById(id);
         }

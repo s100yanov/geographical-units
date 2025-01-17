@@ -39,6 +39,14 @@ public class FlagService {
         return downloaded;
     }
 
+    public FlagResponseDTO getFlagDetails(String name) {
+        Flag requested = flagRepository.findByName(name);
+        if (requested == null) {
+            throw new EntityNotFoundException("Entity with name /" + name + "/ not available!");
+        }
+        return FlagDTOMapper.toFlagResponseDTO(requested);
+    }
+
     public FlagResponseDTO addFlag(MultipartFile file, int countryId) throws IOException {
         if (file == null) {
             throw new IllegalArgumentException("File is null");
