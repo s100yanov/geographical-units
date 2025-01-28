@@ -15,7 +15,7 @@
 ## Structure
 
 - Three Model classes with bidirectional relationships, managed by Hibernate, stored as DB entities
-- Each Entity class is served by it's own RestController and Service classes, DTO records and Repository interfaces, which together provide the needed functionality to process the data and interact with the DB 
+- Each Entity class is served by it's own RestController and Service classes, DTO records and Repository interface, which together provide the needed functionality to process the data and interact with the DB 
 - Three helper classes - mappers, placed in the service package, perform the mapping DTO to Entity and Entity to ResponseDTO
 - In the application.properties file, the necessary configuration regarding the connectivity to a remote MySQL server can be found
 - In the pom.xml file, all the necessary dependencies and plugins can be found
@@ -24,7 +24,7 @@
 
 > The hierarchy of the entities and their interactions are described here.
 > Continent is a parent entity, containing one-to-many relationship with Country/many countries as child entity/entities.
-> Country has many-to-one relationship with it's parent entity Continent and one-to-one relationship with it's child entity - Flag.
+> Country has many-to-one relationship with it's parent entity - Continent and one-to-one relationship with it's child entity - Flag.
 > Flag has one-to-one relationship with it's parent entity Country.
 > @JsonManagedReference and @JsonBackReference are used to avoid infinite recursion.
 > Cascading is used to ensure the child entity is affected by the same action as it's parent. More functionality is added to the child side, to make it possible to independently remove child entity.
