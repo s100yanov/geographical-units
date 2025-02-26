@@ -29,3 +29,6 @@
 > @JsonManagedReference and @JsonBackReference are used to avoid infinite recursion.
 > Cascading is used to ensure the child entity is affected by the same action as it's parent. More functionality is added to the child side, to make it possible to independently remove child entity.
 > The Flag(MultipartFile) is stored in and retrieved from separate storage. In the database only details about the file are stored. Hence two endpoints for retrieval are added in the Flag's RestController - getFlagByName for file downloading from the storage and getFlagDetails for retrieving only the details from the database.
+
+### Next Steps
+Additional features, regarding security, like login controller, database user authentication, password encryption will be integrated into this project or developed as a separate more advanced one.
